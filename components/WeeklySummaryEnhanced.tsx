@@ -157,7 +157,7 @@ export default function WeeklySummaryEnhanced({ userId, selectedDate, refreshTri
               {summary.totalDeficit >= 0 ? '+' : ''}{Math.round(summary.totalDeficit)} kcal
             </div>
             <div style={{ fontSize: '0.85rem', marginTop: '8px', opacity: 0.9 }}>
-              That's {Math.round(summary.totalDeficit / 7700 * 100) / 100} kg of fat loss potential
+              {"That's "}{Math.round(summary.totalDeficit / 7700 * 100) / 100} kg of fat loss potential
             </div>
           </div>
 
