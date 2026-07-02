@@ -23,34 +23,32 @@ export default function WeeklySummary({ userId, selectedDate, refreshTrigger }: 
   const trigger = refreshTrigger ?? 0;
 
   useEffect(() => {
-    fetchWeeklySummary();
-  }, [userId, selectedDate, trigger]);
+    const getWeekStartDate = (dateStr: string) => {
+      const date = new Date(dateStr);
+      const day = date.getDay();
+      const diff = date.getDate() - day;
+      const weekStart = new Date(date.setDate(diff));
+      return weekStart.toISOString().split('T')[0];
+    };
 
-  const getWeekStartDate = (dateStr: string) => {
-    const date = new Date(dateStr);
-    const day = date.getDay();
-    const diff = date.getDate() - day;
-    const weekStart = new Date(date.setDate(diff));
-    return weekStart.toISOString().split('T')[0];
-  };
-
-  const fetchWeeklySummary = async () => {
-    setLoading(true);
-    try {
-      const weekStartDate = getWeekStartDate(selectedDate);
-      const response = await fetch(
-        `/api/weekly-summary?userId=${userId}&weekStartDate=${weekStartDate}`
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setSummary(data);
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const weekStartDate = getWeekStartDate(selectedDate);
+        const response = await fetch(`/api/weekly-summary?userId=${userId}&weekStartDate=${weekStartDate}`);
+        if (response.ok) {
+          const data = await response.json();
+          setSummary(data);
+        }
+      } catch (error) {
+        console.error('Error fetching weekly summary:', error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error('Error fetching weekly summary:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+
+    fetchData();
+  }, [userId, selectedDate, trigger]);
 
   return (
     <div className="card weekly-summary">

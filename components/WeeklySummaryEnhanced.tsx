@@ -31,72 +31,61 @@ export default function WeeklySummaryEnhanced({ userId, selectedDate, refreshTri
   const trigger = refreshTrigger ?? 0;
 
   useEffect(() => {
-    fetchWeeklySummary();
-  }, [userId, selectedDate, trigger]);
+    const getWeekStartDate = (dateStr: string) => {
+      const [year, month, day] = dateStr.split('-').map(Number);
+      const date = new Date(Date.UTC(year, month - 1, day));
+      const dayOfWeek = date.getUTCDay();
+      const daysSinceMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+      const weekStartTime = date.getTime() - (daysSinceMonday * 24 * 60 * 60 * 1000);
+      const weekStart = new Date(weekStartTime);
+      const y = weekStart.getUTCFullYear();
+      const m = String(weekStart.getUTCMonth() + 1).padStart(2, '0');
+      const d = String(weekStart.getUTCDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    };
 
-  const getWeekStartDate = (dateStr: string) => {
-    // Parse explicitly as UTC to avoid timezone issues
-    const [year, month, day] = dateStr.split('-').map(Number);
-    const date = new Date(Date.UTC(year, month - 1, day));
-    const dayOfWeek = date.getUTCDay();
-    // Calculate days since Monday (Monday = 0, Tuesday = 1, ..., Sunday = 6)
-    const daysSinceMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-    // Go back to Monday
-    const weekStartTime = date.getTime() - (daysSinceMonday * 24 * 60 * 60 * 1000);
-    const weekStart = new Date(weekStartTime);
-    // Format as YYYY-MM-DD
-    const y = weekStart.getUTCFullYear();
-    const m = String(weekStart.getUTCMonth() + 1).padStart(2, '0');
-    const d = String(weekStart.getUTCDate()).padStart(2, '0');
-    return `${y}-${m}-${d}`;
-  };
-
-  const getWeekDates = (weekStartDate: string) => {
-    const dates: DailyData[] = [];
-    for (let i = 0; i < 7; i++) {
-      const date = new Date(weekStartDate);
-      date.setDate(date.getDate() + i);
-      dates.push({
-        date: date.toISOString().split('T')[0],
-        consumed: 0,
-        burned: 0,
-        deficit: 0,
-      });
-    }
-    return dates;
-  };
-
-  const fetchWeeklySummary = async () => {
-    setLoading(true);
-    try {
-      const weekStartDate = getWeekStartDate(selectedDate);
-      const response = await fetch(
-        `/api/weekly-summary?userId=${userId}&weekStartDate=${weekStartDate}`
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setSummary(data);
-        
-        // Use daily breakdown data from API
-        const weekDates = getWeekDates(weekStartDate);
-        setDailyData(
-          weekDates.map((d) => {
-            const dayData = data.dailyBreakdown?.[d.date] || { consumed: 0, burned: 0 };
-            return {
-              ...d,
-              consumed: dayData.consumed,
-              burned: dayData.burned,
-              deficit: dayData.burned - dayData.consumed,
-            };
-          })
-        );
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const weekStartDate = getWeekStartDate(selectedDate);
+        const response = await fetch(`/api/weekly-summary?userId=${userId}&weekStartDate=${weekStartDate}`);
+        if (response.ok) {
+          const data = await response.json();
+          setSummary(data);
+          
+          const dates: DailyData[] = [];
+          for (let i = 0; i < 7; i++) {
+            const date = new Date(weekStartDate);
+            date.setDate(date.getDate() + i);
+            dates.push({
+              date: date.toISOString().split('T')[0],
+              consumed: 0,
+              burned: 0,
+              deficit: 0,
+            });
+          }
+          
+          setDailyData(
+            dates.map((d) => {
+              const dayData = data.dailyBreakdown?.[d.date] || { consumed: 0, burned: 0 };
+              return {
+                ...d,
+                consumed: dayData.consumed,
+                burned: dayData.burned,
+                deficit: dayData.burned - dayData.consumed,
+              };
+            })
+          );
+        }
+      } catch (error) {
+        console.error('Error fetching weekly summary:', error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error('Error fetching weekly summary:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+
+    fetchData();
+  }, [userId, selectedDate, trigger]);
 
   const getMaxValue = () => {
     // Use the largest absolute deficit value, with a minimum of 2000
