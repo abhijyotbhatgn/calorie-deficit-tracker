@@ -109,7 +109,6 @@ function saveDb() {
 export async function initializeDatabase() {
   loadDb();
   saveDb();
-  console.log('Database initialized successfully at:', dbPath);
 }
 
 export const db = {

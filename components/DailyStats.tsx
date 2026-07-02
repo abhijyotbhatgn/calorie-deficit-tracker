@@ -52,8 +52,11 @@ export default function DailyStats({ userId, selectedDate, refreshTrigger, onFoo
         method: 'DELETE',
       });
       if (response.ok) {
+        const logToDelete = logs.find(l => l.id === logId);
+        if (logToDelete) {
+          setTotalCalories(totalCalories - logToDelete.caloriesConsumed);
+        }
         setLogs(logs.filter(log => log.id !== logId));
-        setTotalCalories(totalCalories - logs.find(l => l.id === logId)!.caloriesConsumed);
         if (onFoodDeleted) onFoodDeleted();
       } else {
         alert('Failed to delete food log');
