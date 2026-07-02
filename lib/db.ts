@@ -84,7 +84,7 @@ function loadDb(): Database {
     dbData = initDb();
   }
 
-  return dbData;
+  return dbData!;
 }
 
 function initDb(): Database {
