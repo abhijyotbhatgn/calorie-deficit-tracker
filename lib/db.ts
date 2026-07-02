@@ -237,7 +237,7 @@ export const db = {
     let storedName = foodName;
     if (!storedName && foodId) {
       const food = database.foods.find(f => f.id === foodId);
-      storedName = food?.name;
+      storedName = food?.name ?? null;
     }
     
     const searchKey = foodId || (storedName ? storedName.toLowerCase() : null);
