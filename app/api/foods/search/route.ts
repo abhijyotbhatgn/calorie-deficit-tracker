@@ -3,7 +3,7 @@ import { db } from '@/lib/db';
 
 // Placeholder for AI-powered food search using OpenAI
 // In a real implementation, this would call OpenAI's API to estimate calories
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const { foodDescription } = await request.json();
 
