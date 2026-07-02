@@ -27,25 +27,24 @@ export default function QuickLogDashboard({ userId, selectedDate, onFoodLogged, 
   const [addValues, setAddValues] = useState({ name: '', calories: '' });
 
   useEffect(() => {
+    const fetchFrequentFoods = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(`/api/frequent-foods?userId=${userId}&limit=10`);
+        if (response.ok) {
+          const data = await response.json();
+          // Sort by logCount descending to show most frequent at top
+          const sorted = [...data].sort((a, b) => (b.logCount || 0) - (a.logCount || 0));
+          setFrequentFoods(sorted);
+        }
+      } catch (error) {
+        console.error('Error fetching frequent foods:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchFrequentFoods();
   }, [userId, refreshTrigger]);
-
-  const fetchFrequentFoods = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(`/api/frequent-foods?userId=${userId}&limit=10`);
-      if (response.ok) {
-        const data = await response.json();
-        // Sort by logCount descending to show most frequent at top
-        const sorted = [...data].sort((a, b) => (b.logCount || 0) - (a.logCount || 0));
-        setFrequentFoods(sorted);
-      }
-    } catch (error) {
-      console.error('Error fetching frequent foods:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const logQuickFood = async (food: FrequentFood) => {
     try {
