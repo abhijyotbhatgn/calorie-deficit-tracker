@@ -24,14 +24,15 @@ interface WeeklySummaryProps {
   refreshTrigger?: number;
 }
 
-export default function WeeklySummaryEnhanced({ userId, selectedDate, refreshTrigger = 0 }: WeeklySummaryProps) {
+export default function WeeklySummaryEnhanced({ userId, selectedDate, refreshTrigger }: WeeklySummaryProps) {
   const [summary, setSummary] = useState<WeeklySummaryData | null>(null);
   const [dailyData, setDailyData] = useState<DailyData[]>([]);
   const [loading, setLoading] = useState(false);
+  const trigger = refreshTrigger ?? 0;
 
   useEffect(() => {
     fetchWeeklySummary();
-  }, [userId, selectedDate, refreshTrigger]);
+  }, [userId, selectedDate, trigger]);
 
   const getWeekStartDate = (dateStr: string) => {
     // Parse explicitly as UTC to avoid timezone issues

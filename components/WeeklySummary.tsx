@@ -17,13 +17,14 @@ interface WeeklySummaryProps {
   refreshTrigger?: number;
 }
 
-export default function WeeklySummary({ userId, selectedDate, refreshTrigger = 0 }: WeeklySummaryProps) {
+export default function WeeklySummary({ userId, selectedDate, refreshTrigger }: WeeklySummaryProps) {
   const [summary, setSummary] = useState<WeeklySummaryData | null>(null);
   const [loading, setLoading] = useState(false);
+  const trigger = refreshTrigger ?? 0;
 
   useEffect(() => {
     fetchWeeklySummary();
-  }, [userId, selectedDate, refreshTrigger]);
+  }, [userId, selectedDate, trigger]);
 
   const getWeekStartDate = (dateStr: string) => {
     const date = new Date(dateStr);
