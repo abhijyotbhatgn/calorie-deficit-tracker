@@ -31,7 +31,7 @@ export default function WeeklySummaryEnhanced({ userId, selectedDate, refreshTri
 
   useEffect(() => {
     fetchWeeklySummary();
-  }, [selectedDate, refreshTrigger]);
+  }, [userId, selectedDate, refreshTrigger]);
 
   const getWeekStartDate = (dateStr: string) => {
     // Parse explicitly as UTC to avoid timezone issues

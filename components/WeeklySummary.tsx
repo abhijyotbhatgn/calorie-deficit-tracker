@@ -23,7 +23,7 @@ export default function WeeklySummary({ userId, selectedDate, refreshTrigger = 0
 
   useEffect(() => {
     fetchWeeklySummary();
-  }, [selectedDate, refreshTrigger]);
+  }, [userId, selectedDate, refreshTrigger]);
 
   const getWeekStartDate = (dateStr: string) => {
     const date = new Date(dateStr);
