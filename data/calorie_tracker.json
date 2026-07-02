@@ -1,0 +1,146 @@
+{
+  "foods": [],
+  "daily_logs": [
+    {
+      "id": 2,
+      "userId": "user_default",
+      "foodId": 1,
+      "foodName": "Precoffee w 2%",
+      "caloriesConsumed": 120,
+      "servings": 1,
+      "logDate": "2026-07-01",
+      "source": "manual",
+      "createdAt": "2026-07-01T20:53:03.213Z"
+    },
+    {
+      "id": 3,
+      "userId": "user_default",
+      "foodName": "FreshBowl",
+      "caloriesConsumed": 700,
+      "servings": 1,
+      "logDate": "2026-07-01",
+      "source": "manual",
+      "createdAt": "2026-07-01T20:54:21.681Z"
+    },
+    {
+      "id": 4,
+      "userId": "user_default",
+      "foodName": "Coffee Office",
+      "caloriesConsumed": 100,
+      "servings": 1,
+      "logDate": "2026-07-01",
+      "source": "manual",
+      "createdAt": "2026-07-01T20:54:50.509Z"
+    },
+    {
+      "id": 5,
+      "userId": "user_default",
+      "foodName": "Quest Protein bar",
+      "caloriesConsumed": 190,
+      "servings": 1,
+      "logDate": "2026-07-01",
+      "source": "manual",
+      "createdAt": "2026-07-01T23:05:27.386Z"
+    },
+    {
+      "id": 6,
+      "userId": "user_default",
+      "foodName": "Coffee Office",
+      "caloriesConsumed": 100,
+      "servings": 1,
+      "logDate": "2026-06-30",
+      "source": "manual",
+      "createdAt": "2026-07-01T23:27:38.182Z"
+    },
+    {
+      "id": 7,
+      "userId": "user_default",
+      "foodName": "Quest Protein bar",
+      "caloriesConsumed": 190,
+      "servings": 1,
+      "logDate": "2026-06-30",
+      "source": "manual",
+      "createdAt": "2026-07-01T23:27:47.092Z"
+    },
+    {
+      "id": 8,
+      "userId": "user_default",
+      "foodName": "Momos Everest",
+      "caloriesConsumed": 650,
+      "servings": 1,
+      "logDate": "2026-06-30",
+      "source": "manual",
+      "createdAt": "2026-07-01T23:58:32.720Z"
+    },
+    {
+      "id": 10,
+      "userId": "user_default",
+      "foodName": "Coffee Latte -home",
+      "caloriesConsumed": 180,
+      "servings": 1,
+      "logDate": "2026-07-02",
+      "source": "manual",
+      "createdAt": "2026-07-02T15:53:07.091Z"
+    }
+  ],
+  "health_sync": [
+    {
+      "id": 1,
+      "userId": "user_default",
+      "syncDate": "2026-07-01",
+      "totalCaloriesConsumed": 0,
+      "totalCaloriesBurned": 3000,
+      "deficit": 3000,
+      "source": "apple_health",
+      "syncedAt": "2026-07-01T17:58:34.616Z"
+    }
+  ],
+  "frequent_foods": [
+    {
+      "id": 1,
+      "userId": "user_default",
+      "foodName": "Precoffee w 2%",
+      "caloriesPerServing": 120,
+      "logCount": 0,
+      "lastLoggedAt": "2026-07-01T19:59:25.349Z"
+    },
+    {
+      "id": 2,
+      "userId": "user_default",
+      "foodName": "FreshBowl",
+      "caloriesPerServing": 700,
+      "logCount": 6,
+      "lastLoggedAt": "2026-07-02T17:43:27.798Z"
+    },
+    {
+      "id": 3,
+      "userId": "user_default",
+      "foodName": "Coffee Office",
+      "logCount": 2,
+      "lastLoggedAt": "2026-07-01T23:27:38.183Z"
+    },
+    {
+      "id": 4,
+      "userId": "user_default",
+      "foodName": "Quest Protein bar",
+      "logCount": 2,
+      "lastLoggedAt": "2026-07-01T23:27:47.093Z"
+    },
+    {
+      "id": 5,
+      "userId": "user_default",
+      "foodName": "Momos Everest",
+      "caloriesPerServing": 650,
+      "logCount": 1,
+      "lastLoggedAt": "2026-07-01T23:58:32.721Z"
+    },
+    {
+      "id": 6,
+      "userId": "user_default",
+      "foodName": "Coffee Latte -home",
+      "logCount": 1,
+      "lastLoggedAt": "2026-07-02T15:53:07.093Z"
+    }
+  ],
+  "weekly_summary": []
+}
