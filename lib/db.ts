@@ -67,6 +67,10 @@ interface Database {
 let dbData: Database | null = null;
 let supabaseClient: SupabaseClient | null = null;
 
+function shouldUseFilesystemFallback(): boolean {
+  return !process.env.VERCEL;
+}
+
 function getSupabaseClient(): SupabaseClient | null {
   if (supabaseClient) return supabaseClient;
 
@@ -101,6 +105,11 @@ function initDb(): Database {
 function loadDb(): Database {
   if (dbData) return dbData;
 
+  if (!shouldUseFilesystemFallback()) {
+    dbData = initDb();
+    return dbData!;
+  }
+
   const dataDir = path.dirname(dbPath);
   if (!fs.existsSync(dataDir)) {
     fs.mkdirSync(dataDir, { recursive: true });
@@ -122,6 +131,10 @@ function loadDb(): Database {
 
 function saveDb() {
   if (!dbData) return;
+
+  if (!shouldUseFilesystemFallback()) {
+    return;
+  }
 
   const dataDir = path.dirname(dbPath);
   if (!fs.existsSync(dataDir)) {
