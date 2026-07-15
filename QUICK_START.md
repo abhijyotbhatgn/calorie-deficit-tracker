@@ -40,18 +40,25 @@ git push origin main
 
 ---
 
-## Deploy to Railway (Hosting)
-- [ ] Sign up: https://railway.app (use GitHub login)
-- [ ] New Project → Deploy from GitHub
+## Deploy to Vercel (Primary)
+- [ ] Sign up: https://vercel.com (use GitHub login)
+- [ ] New Project -> Import Git Repository
 - [ ] Select your repo
-- [ ] Wait for deployment (2-3 mins)
-- [ ] Copy your live URL from Railway dashboard
+- [ ] Add env var `OPENAI_API_KEY` (if using AI food search)
+- [ ] Deploy and copy your live URL
+
+## Deploy to Render (Backup)
+- [ ] Sign up: https://render.com (use GitHub login)
+- [ ] New -> Blueprint
+- [ ] Select your repo (uses `render.yaml`)
+- [ ] Add env var `OPENAI_API_KEY` if needed
+- [ ] Deploy and copy backup URL
 
 ---
 
 ## iPhone Home Screen
 - [ ] Open Safari on iPhone
-- [ ] Go to your Railway URL
+- [ ] Go to your Vercel URL
 - [ ] Share → Add to Home Screen
 - [ ] Done! 🎉
 
@@ -59,7 +66,7 @@ git push origin main
 
 ## Files Created for Deployment
 - ✅ `public/manifest.json` - PWA configuration
-- ✅ `Procfile` - Railway configuration
+- ✅ `render.yaml` - Render Blueprint configuration
 - ✅ Updated `app/layout.tsx` - iPhone meta tags
 - ✅ `COMPLETE_DEPLOYMENT_GUIDE.md` - Full details
 - ✅ `DEPLOY_STEPS.md` - Deployment steps

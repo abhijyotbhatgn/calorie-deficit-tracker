@@ -1,77 +1,43 @@
-# 🚀 Deploy to Railway in 5 Minutes
+# Deploy in 5 Minutes (Vercel + Render)
 
-## Step-by-Step Instructions
+## 1. Push Latest Code
 
-### 1. Push to GitHub
 ```bash
 git add .
-git commit -m "Ready for deployment to Railway"
+git commit -m "Prepare deployment for Vercel and Render"
 git push origin main
 ```
 
-### 2. Go to Railway.app
-- Visit https://railway.app
-- Click "Start a New Project"
-- Select "Deploy from GitHub repo"
+## 2. Deploy to Vercel (Primary)
 
-### 3. Connect GitHub
-- Click "Authorize Railway"
-- Select your repository "Calorie deficit"
-- Click "Deploy Now"
+1. Visit https://vercel.com/new.
+2. Import your GitHub repository.
+3. Confirm framework is Next.js.
+4. Add environment variables if needed:
+   - `OPENAI_API_KEY`
+5. Click Deploy.
+6. Copy the Vercel URL.
 
-### 4. Wait for Deployment
-- Railway will automatically:
-  - Build your Next.js app
-  - Start the server
-  - Give you a live URL
-  - Create persistent storage for your database
+## 3. Deploy to Render (Backup)
 
-### 5. Get Your Live URL
-- Once deployed, Railway shows your URL (looks like: `https://yourapp-production.up.railway.app`)
-- Copy this URL
+1. Visit https://dashboard.render.com/new/blueprint.
+2. Select the same GitHub repository.
+3. Render detects `render.yaml` and creates the web service.
+4. Add env vars if needed (same as Vercel).
+5. Deploy and copy the Render URL.
 
-### 6. Add to iPhone Home Screen
-1. Open Safari on iPhone
-2. Paste your Railway URL in address bar
-3. Tap Share (bottom center icon)
-4. Select "Add to Home Screen"
-5. Name it "Calorie Tracker"
-6. Tap "Add"
+## 4. Add to iPhone Home Screen
 
-Done! 🎉
+1. Open Safari on iPhone.
+2. Open your Vercel (or Render) URL.
+3. Tap Share.
+4. Tap Add to Home Screen.
+5. Confirm and tap Add.
 
----
+Done.
 
-## What Just Happened?
+## Notes
 
-✅ Your app is now live on the internet
-✅ Accessible from any device with the URL
-✅ iPhone home screen icon with 🍎 emoji
-✅ Data persists in Railway's storage
-✅ Free tier (up to 5GB/month)
-
----
-
-## Access Anytime
-
-- **iPhone:** Open Calorie Tracker app icon
-- **Computer:** Visit the Railway URL
-- **Anywhere:** Just open the URL in any browser
-
----
-
-## Still in Development?
-
-If you want to keep making changes:
-```bash
-npm run dev  # Local development continues
-git push    # Push changes to GitHub
-# Railway auto-redeploys on each push!
-```
-
----
-
-## Questions?
-
-Check Railway's docs: https://docs.railway.app/
-Or see DEPLOYMENT.md for more details
+- Vercel is the preferred primary platform for Next.js.
+- Render is a good fallback.
+- Current file-based data storage may reset on free cloud infrastructure; use hosted Postgres for persistent production data.

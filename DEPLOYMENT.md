@@ -1,97 +1,59 @@
 # Deployment Guide: Calorie Deficit Tracker
 
-## Option 1: Deploy to Railway.app (Recommended for Free Tier)
+This project is now configured for:
+- Vercel (primary)
+- Render (secondary/fallback)
 
-Railway.app is the best free option for this app since it supports persistent storage for SQLite databases.
+## Important Data Note
 
-### Quick Start:
+The app currently stores data in `data/calorie_tracker.json`.
 
-1. **Sign up at Railway.app**
-   - Go to https://railway.app
-   - Sign up with GitHub (recommended)
+On free cloud hosting, local file writes are usually not durable across restarts/redeploys.
+If you need persistent production data, migrate to a managed database (recommended: Supabase Postgres).
 
-2. **Connect Your Repository**
-   - Click "Create a New Project"
-   - Select "Deploy from GitHub"
-   - Connect your GitHub account and select this repository
-   - Railway will auto-detect it's a Next.js app
+## Option 1: Vercel (Recommended)
 
-3. **Configure Environment**
-   - Go to Project Settings
-   - Add variables if needed (leave defaults for now)
-   - Railway automatically sets `DATABASE_URL` for databases
+1. Push latest code to GitHub.
+2. Go to https://vercel.com/new.
+3. Import this repository.
+4. Framework preset should auto-detect as Next.js.
+5. Add environment variables if needed:
+   - `OPENAI_API_KEY` (if AI food search is enabled)
+6. Click Deploy.
+7. After deployment, open the generated Vercel URL.
 
-4. **Deploy**
-   - Railway will automatically build and deploy your app
-   - Your app will be live at a Railway-generated URL
+## Option 2: Render (Backup)
 
-5. **Access on iPhone**
-   - Open the deployed URL on your iPhone
-   - Tap Share → Add to Home Screen
-   - The app will install with the app icon (🍎)
-   - Full screen, no browser UI!
+This repo includes `render.yaml`, so Render can auto-configure service settings.
 
-### Database Persistence:
-- SQLite database file is stored in Railway's persistent storage
-- Data will be retained between deployments
+1. Push latest code to GitHub.
+2. Go to https://dashboard.render.com/new/blueprint.
+3. Connect repository and create the Blueprint.
+4. Confirm env vars:
+   - `NODE_VERSION=20`
+   - `OPENAI_API_KEY` (optional, if AI search is used)
+5. Deploy and wait for build to finish.
 
----
+## iPhone Home Screen Setup (PWA)
 
-## Option 2: Deploy to Vercel (If You Migrate to PostgreSQL)
+1. Open Safari on iPhone and visit your deployed URL.
+2. Tap Share.
+3. Tap Add to Home Screen.
+4. Confirm app name and tap Add.
 
-If you want to use Vercel instead, you'll need to:
-1. Create a PostgreSQL database (Neon, Supabase, or Railway's PostgreSQL)
-2. Update the database connection in `lib/db.ts`
-3. Deploy to Vercel
-
-This is more complex, so Railway is recommended for simplicity.
-
----
-
-## iPhone Web App Setup
-
-Once deployed, on your iPhone:
-
-1. **Add to Home Screen:**
-   - Open Safari → navigate to your app URL
-   - Tap Share button (bottom right)
-   - Select "Add to Home Screen"
-   - Name it and tap "Add"
-
-2. **Access Like a Native App:**
-   - Opens in full-screen mode
-   - No browser address bar
-   - Appears in your app library
-
-3. **PWA Features:**
-   - The app now has a custom icon (🍎)
-   - Splash screen with your branding
-   - Can be used offline (with service worker enhancement)
-
----
+The app opens in standalone mode using the existing manifest and iOS web app metadata.
 
 ## Troubleshooting
 
-**If database resets on deploy:**
-- Ensure persistent volume is mounted in Railway
-- Check railway.toml or Railway dashboard settings
+If deployment fails:
+- Run `npm run build` locally and fix any TypeScript or ESLint errors.
+- Confirm Node.js version is 18+ (20 recommended).
 
-**If app won't start:**
-- Check Railway logs for errors
-- Ensure build script runs: `npm run build`
-- Verify start script is: `npm start`
+If app data resets:
+- Expected with file-based storage on ephemeral environments.
+- Migrate from JSON file storage to hosted Postgres.
 
-**If icons don't appear on iPhone:**
-- Clear iPhone Safari cache
-- Re-add to home screen
-- Check manifest.json is accessible at `/manifest.json`
-
----
-
-## Files Added for Deployment:
-
-- `public/manifest.json` - PWA manifest for iPhone home screen
-- `Procfile` - Process configuration for Railway
-- Updated `app/layout.tsx` - Added PWA meta tags
-
-All existing functionality remains unchanged!
+If icon/install option is missing on iPhone:
+- Use Safari (not Chrome).
+- Verify `/manifest.json` loads.
+- Re-open page and retry Add to Home Screen.
