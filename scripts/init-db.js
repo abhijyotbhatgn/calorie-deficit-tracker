@@ -7,16 +7,25 @@ if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir, { recursive: true });
 }
 
-// Import and run initialization
-const { initializeDatabase } = require('./lib/db.ts');
+const dbPath = path.join(dataDir, 'calorie_tracker.json');
 
-(async () => {
-  try {
-    await initializeDatabase();
-    console.log('✓ Database initialized successfully');
-    process.exit(0);
-  } catch (error) {
-    console.error('✗ Failed to initialize database:', error);
-    process.exit(1);
+const defaultDb = {
+  foods: [],
+  daily_logs: [],
+  health_sync: [],
+  frequent_foods: [],
+  weekly_summary: [],
+};
+
+try {
+  if (!fs.existsSync(dbPath)) {
+    fs.writeFileSync(dbPath, JSON.stringify(defaultDb, null, 2));
+    console.log('✓ Local JSON database initialized');
+  } else {
+    console.log('✓ Local JSON database already exists');
   }
-})();
+  process.exit(0);
+} catch (error) {
+  console.error('✗ Failed to initialize local JSON database:', error);
+  process.exit(1);
+}

@@ -100,12 +100,27 @@ A full-stack web application for tracking daily calorie deficit with Apple Healt
 Create a `.env.local` file in the project root:
 
 ```env
+# Supabase (required for persistent cloud data)
+SUPABASE_URL=your_supabase_project_url
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+
 # OpenAI API Key (for AI food search)
 OPENAI_API_KEY=your_api_key_here
 
 # Apple Health Integration (future)
 APPLE_HEALTH_API_KEY=your_key_here
 ```
+
+### Supabase Setup (Recommended for Production)
+
+1. Create a Supabase project.
+2. In Supabase SQL Editor, run `scripts/supabase-schema.sql`.
+3. Add `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` in:
+   - `.env.local` (local)
+   - Vercel environment variables
+   - Render environment variables
+
+If `SUPABASE_*` variables are not set, the app falls back to local JSON storage in `data/calorie_tracker.json`.
 
 ## Development
 

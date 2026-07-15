@@ -17,8 +17,10 @@ If you need persistent production data, migrate to a managed database (recommend
 2. Go to https://vercel.com/new.
 3. Import this repository.
 4. Framework preset should auto-detect as Next.js.
-5. Add environment variables if needed:
-   - `OPENAI_API_KEY` (if AI food search is enabled)
+5. Add environment variables:
+   - `SUPABASE_URL`
+   - `SUPABASE_SERVICE_ROLE_KEY`
+   - `OPENAI_API_KEY` (optional, if AI food search is enabled)
 6. Click Deploy.
 7. After deployment, open the generated Vercel URL.
 
@@ -31,6 +33,8 @@ This repo includes `render.yaml`, so Render can auto-configure service settings.
 3. Connect repository and create the Blueprint.
 4. Confirm env vars:
    - `NODE_VERSION=20`
+   - `SUPABASE_URL`
+   - `SUPABASE_SERVICE_ROLE_KEY`
    - `OPENAI_API_KEY` (optional, if AI search is used)
 5. Deploy and wait for build to finish.
 
