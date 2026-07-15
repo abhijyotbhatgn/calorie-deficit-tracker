@@ -15,10 +15,14 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     await db.logFood(userId, foodId || null, foodName, calories, servings, logDate, 'manual');
 
     // Update frequent foods - track by foodId if available, otherwise by foodName
-    if (foodId) {
-      await db.addFrequentFood(userId, foodId, null);
-    } else {
-      await db.addFrequentFood(userId, null, foodName);
+    try {
+      if (foodId) {
+        await db.addFrequentFood(userId, foodId, null);
+      } else {
+        await db.addFrequentFood(userId, null, foodName);
+      }
+    } catch (favoriteError) {
+      console.error('Failed to update frequent foods:', favoriteError);
     }
 
     return NextResponse.json({ success: true });
